@@ -1,4 +1,4 @@
-package com.udacity.gradle.builditbigger;
+package com.udacity.gradle.builditbigger.paid;
 
 /**
  * Created by Eko Setyo Purnomo on 29-Nov-17.
@@ -8,7 +8,6 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.ekosp.joketeller.backend.myApi.MyApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -16,14 +15,14 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 
-class EndpointAsyncTask extends AsyncTask<MainActivityFragment, Void, String> {
+class EndpointAsyncTask extends AsyncTask<com.udacity.gradle.builditbigger.paid.MainActivityFragment, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
-    private MainActivityFragment mainActivityFragment;
+    private com.udacity.gradle.builditbigger.paid.MainActivityFragment mainActivityFragment;
 
 
     @Override
-    protected String doInBackground(MainActivityFragment... params) {
+    protected String doInBackground(com.udacity.gradle.builditbigger.paid.MainActivityFragment... params) {
         if(myApiService == null) {
 
 
@@ -41,7 +40,7 @@ class EndpointAsyncTask extends AsyncTask<MainActivityFragment, Void, String> {
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });*/
-             // end options for devappserver
+            // end options for devappserver
 
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(), new
                     AndroidJsonFactory(), null)

@@ -11,8 +11,11 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.ekosp.androlib.JokePresenter;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 
 
 /**
@@ -21,8 +24,10 @@ import com.google.android.gms.ads.AdView;
 public class MainActivityFragment extends Fragment {
 
     ProgressBar progressBar = null;
-    public String loadedJoke = null;
-    public boolean testFlag = false;
+    public String fetchJoke = null;
+    public boolean isTested = false;
+    private PublisherInterstitialAd mPublisherInterstitialAd;
+
 
     public MainActivityFragment() {
     }
@@ -30,6 +35,45 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // create interstitial ads via https://developers.google.com/mobile-ads-sdk/docs/dfp/android/interstitial
+        mPublisherInterstitialAd = new PublisherInterstitialAd(getContext());
+        mPublisherInterstitialAd.setAdUnitId("/6499/example/interstitial");
+
+        mPublisherInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                progressBar.setVisibility(View.VISIBLE);
+                getJoke();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+                getNewInterstitialAds();
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when when the interstitial ad is closed.
+            }
+        });
+        
+        // get new ads
+        getNewInterstitialAds();
+
+
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
@@ -41,36 +85,45 @@ public class MainActivityFragment extends Fragment {
                 .build();
         mAdView.loadAd(adRequest);
 
-
-
-// Set onClickListener for the button
+        // Set onClickListener for the button
         Button button = (Button) root.findViewById(R.id.btn_joke);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                getJoke();
+        if (mPublisherInterstitialAd.isLoaded()) {
+            mPublisherInterstitialAd.show();
+        } else {
+            progressBar.setVisibility(View.VISIBLE);
+            getJoke();
             }
+        }
         });
 
         progressBar = (ProgressBar) root.findViewById(R.id.joke_progressbar);
         progressBar.setVisibility(View.GONE);
 
-
-
         return root;
     }
+
+    private void getNewInterstitialAds() {
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice("EA27D37DF5448BF42AA5F7A6D4F11A9B")
+                .build();
+
+        mPublisherInterstitialAd.loadAd(adRequest);
+    }
+
 
     public void getJoke(){
         new EndpointAsyncTask().execute(this);
     }
 
     public void launchDisplayJokeActivity(){
-        if (!testFlag) {
+        if (!isTested) {
             Context context = getActivity();
             Intent intent = new Intent(context, JokePresenter.class);
-            intent.putExtra(JokePresenter.JOKES_EXTRA, loadedJoke);
-            //Toast.makeText(context, loadedJoke, Toast.LENGTH_LONG).show();
+            intent.putExtra(JokePresenter.JOKES_EXTRA, fetchJoke);
             context.startActivity(intent);
             progressBar.setVisibility(View.GONE);
         }

@@ -19,9 +19,9 @@ public class EndPointAsyncTaskTest {
     @Test
     public void testDoInBackground() throws Exception {
         com.udacity.gradle.builditbigger.MainActivityFragment fragment = new com.udacity.gradle.builditbigger.MainActivityFragment();
-        fragment.testFlag = true;
+        fragment.isTested = true;
         new EndpointAsyncTask().execute(fragment);
         Thread.sleep(5000);
-        assertTrue("Error: Fetched Joke = " + fragment.loadedJoke, fragment.loadedJoke != null);
+        assertTrue("Error: Fetched Joke = " + fragment.fetchJoke, fragment.fetchJoke != null);
     }
 }

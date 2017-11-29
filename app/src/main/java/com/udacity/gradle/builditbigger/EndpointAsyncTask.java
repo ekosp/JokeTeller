@@ -16,16 +16,19 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 
-class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
+class EndpointAsyncTask extends AsyncTask<MainActivityFragment, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    private MainActivityFragment mainActivityFragment;
+
 
     @Override
-    protected String doInBackground(Context... params) {
-        if(myApiService == null) {  // Only do this once
+    protected String doInBackground(MainActivityFragment... params) {
+        if(myApiService == null) {
 
-            // run only once
-           /* MyApi.Builder builder = new
+
+            // Only do this once
+            /* MyApi.Builder builder = new
                     MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     // options for running against local devappserver
@@ -47,8 +50,8 @@ class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        context = params[0];
-
+        mainActivityFragment = params[0];
+        context = mainActivityFragment.getActivity();
 
         try {
             return myApiService.tellJoke().execute().getData();
@@ -65,6 +68,8 @@ class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
         intent.putExtra(DisplayJokeActivity.JOKE_KEY,result);
         context.startActivity(intent);
 */
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        mainActivityFragment.loadedJoke = result;
+        mainActivityFragment.launchDisplayJokeActivity();
     }
 }

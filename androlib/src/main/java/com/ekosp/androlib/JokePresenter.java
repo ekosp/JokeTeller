@@ -25,7 +25,7 @@ public class JokePresenter extends AppCompatActivity {
         if (JokeResult != null) {
             textview.setText(JokeResult);
         } else {
-            textview.setText("Dig deeped, we gotta find the joke!");
+            textview.setText("Jokes Result null?, where is my jokes?!");
         }
     }
 }

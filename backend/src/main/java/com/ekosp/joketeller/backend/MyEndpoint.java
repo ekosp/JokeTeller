@@ -38,8 +38,6 @@ public class MyEndpoint {
         return response;
     }
 
-
-
     @ApiMethod(name = "tellJoke")
     public MyBean tellJoke(){
         MyBean response = new MyBean();

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
         //Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
        /* JokeProvider joker = new JokeProvider();
-        // Create Intent to launch JokeFactory Activity
+        // Create Intent to launch JokePresenter Activity
         Intent intent = new Intent(this, JokePresenter.class);
         // Put the string in the envelope
         intent.putExtra(JokePresenter.JOKES_EXTRA, joker.tellJoke());

@@ -26,6 +26,7 @@ class EndpointAsyncTask extends AsyncTask<MainActivityFragment, Void, String> {
     protected String doInBackground(MainActivityFragment... params) {
         if(myApiService == null) {
 
+
             // Only do this once
             /* MyApi.Builder builder = new
                     MyApi.Builder(AndroidHttp.newCompatibleTransport(),
@@ -40,11 +41,12 @@ class EndpointAsyncTask extends AsyncTask<MainActivityFragment, Void, String> {
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });*/
-             // end options for devappserver
+            // end options for devappserver
 
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(), new
                     AndroidJsonFactory(), null)
                     .setRootUrl("https://joketeller-1234.appspot.com/_ah/api/");
+
 
             myApiService = builder.build();
         }
@@ -61,6 +63,7 @@ class EndpointAsyncTask extends AsyncTask<MainActivityFragment, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        // Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         mainActivityFragment.fetchJoke = result;
         mainActivityFragment.launchDisplayJokeActivity();
     }

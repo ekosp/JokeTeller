@@ -20,7 +20,9 @@ public class JokePresenter extends AppCompatActivity {
         String JokeResult = null;
         //the Intent that started us
         Intent intent = getIntent();
-        JokeResult = intent.getStringExtra(JOKES_EXTRA);
+        if (intent.hasExtra(JOKES_EXTRA)) {
+            JokeResult = intent.getStringExtra(JOKES_EXTRA);
+        }
 
         if (JokeResult != null) {
             textview.setText(JokeResult);

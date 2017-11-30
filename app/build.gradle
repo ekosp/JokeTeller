@@ -42,16 +42,17 @@ dependencies {
     compile project(':javalib')
     compile project(':androlib')
     compile project(path: ':backend', configuration: 'android-endpoints')
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.google.code.findbugs:jsr305:2.0.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    androidTestCompile 'junit:junit:4.12'
+
+    compile     'com.android.support:appcompat-v7:25.0.0'
+    compile    'com.google.code.findbugs:jsr305:2.0.1'
+    compile    'com.android.support:support-v4:25.3.1'
+    compile    'com.android.support.constraint:constraint-layout:1.0.2'
+    androidTestCompile    'junit:junit:4.12'
 
     // only compile ads on free flavor
     freeCompile 'com.google.android.gms:play-services-ads:9.8.0'
-
-
 }
+
 
 
 

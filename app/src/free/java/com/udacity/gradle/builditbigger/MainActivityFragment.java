@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.ekosp.androlib.*;
+import com.ekosp.androlib.JokePresenter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
@@ -110,7 +110,7 @@ public class MainActivityFragment extends Fragment {
     }
 
     public void getJoke(){
-        new com.udacity.gradle.builditbigger.EndpointAsyncTask().execute(this);
+        new EndpointAsyncTask().execute(this);
     }
 
     public void launchDisplayJokeActivity(){
